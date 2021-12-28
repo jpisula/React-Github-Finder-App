@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react/cjs/react.development';
+import { createContext, useReducer } from 'react';
 import AlertReducer from './AlertReducer';
 
 const AlertContext = createContext();

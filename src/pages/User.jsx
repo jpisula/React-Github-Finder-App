@@ -5,16 +5,23 @@ import { useContext } from 'react/cjs/react.development';
 import GithubContext from '../context/github/GithubContext';
 import Spinner from '../components/layout/Spinner';
 import RepoList from '../components/repos/RepoList';
+import { getUser, getUserRepos } from '../context/github/GithubActions';
 
 function User() {
   const { login } = useParams();
-  const { getUser, user, loading, getUserRepos, repos } =
-    useContext(GithubContext);
+  const { user, loading, repos, dispatch } = useContext(GithubContext);
 
   useEffect(() => {
-    getUser(login);
-    getUserRepos(login);
-  }, []);
+    dispatch({ type: 'SET_LOADING' });
+    const getUserData = async () => {
+      const userData = await getUser(login);
+      dispatch({ type: 'GET_USER', payload: userData });
+
+      const userRepoData = await getUserRepos(login);
+      dispatch({ type: 'GET_REPOS', payload: userRepoData });
+    };
+    getUserData();
+  }, [dispatch, login]);
 
   const {
     name,
@@ -23,7 +30,6 @@ function User() {
     location,
     bio,
     blog,
-    twitter_username,
     html_url,
     followers,
     following,

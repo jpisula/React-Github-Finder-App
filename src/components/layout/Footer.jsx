@@ -1,4 +1,4 @@
-import { ReactComponent as FooterSVG } from '../../assets/footerSVG.svg';
+import { ReactComponent as FooterSVG } from './assets/footerSVG.svg';
 
 function Footer() {
   const footerYear = new Date().getFullYear();
